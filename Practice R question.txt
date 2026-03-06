@@ -1,0 +1,134 @@
+🌱 1. Basic Data Wrangling Practice
+Create Sample Dataset
+sales <- tibble(
+  order_id = 1:10,
+  customer = c("Alice", "Bob", "Alice", "David", "Emma",
+               "Bob", "Emma", "Alice", "David", "Emma"),
+  product = c("Laptop", "Tablet", "Phone", "Laptop", "Tablet",
+              "Phone", "Laptop", "Phone", "Tablet", "Laptop"),
+  price = c(1200, 500, 800, 1200, 500, 800, 1200, 800, 500, 1200),
+  quantity = c(1, 2, 1, 1, 3, 2, 1, 1, 2, 1),
+  order_date = as.Date(c("2023-01-10", "2023-01-11", "2023-01-15",
+                         "2023-02-01", "2023-02-05", "2023-02-20",
+                         "2023-03-01", "2023-03-10", "2023-03-15", "2023-03-20"))
+)
+🧠 Tasks
+
+Add a column total = price * quantity.
+
+Find total revenue per product.
+
+Find the customer who spent the most money.
+
+Filter orders made in February.
+
+Arrange orders by highest total value.
+
+🌿 2. Grouping + Summarising Practice
+Dataset
+students <- tibble(
+  name = c("Anna", "Ben", "Clara", "David", "Ella", "Frank"),
+  major = c("Math", "Math", "Physics", "Physics", "Math", "Physics"),
+  year = c(1, 2, 1, 3, 2, 3),
+  grade = c(88, 92, 85, 90, 95, 87)
+)
+🧠 Tasks
+
+Compute average grade by major.
+
+Compute average grade by major AND year.
+
+Count how many students per major.
+
+Find the top student in each major.
+
+Add a column that shows each student’s grade minus their major average.
+
+🌳 3. pivot_longer() and pivot_wider() Practice
+Dataset
+weather <- tibble(
+  city = c("NY", "LA", "Chicago"),
+  jan = c(0, 15, -5),
+  feb = c(2, 17, -3),
+  mar = c(8, 20, 5)
+)
+🧠 Tasks
+
+Convert the dataset to long format (month + temperature columns).
+
+Calculate the average temperature per month.
+
+Convert it back to wide format.
+
+Arrange cities by March temperature.
+
+Filter cities where any month temperature is below 0.
+
+🌲 4. mutate() + case_when() Practice
+Dataset
+employees <- tibble(
+  name = c("Tom", "Sara", "Mike", "Linda", "James"),
+  salary = c(30000, 50000, 75000, 120000, 45000),
+  department = c("HR", "IT", "IT", "Management", "HR")
+)
+🧠 Tasks
+
+Create salary categories:
+
+<40000 → "Low"
+
+40000-80000 → "Medium"
+
+>80000 → "High"
+
+Calculate average salary per department.
+
+Find highest paid employee in each department.
+
+Create a 10% salary increase column.
+
+Filter employees in IT with salary > 60k.
+
+🌴 5. Joining Practice
+Dataset 1
+customers <- tibble(
+  customer_id = 1:4,
+  name = c("Alice", "Bob", "Charlie", "Diana")
+)
+Dataset 2
+orders <- tibble(
+  order_id = 101:105,
+  customer_id = c(1, 2, 1, 3, 5),
+  amount = c(250, 100, 300, 150, 400)
+)
+🧠 Tasks
+
+Perform a left_join().
+
+Perform an inner_join().
+
+Identify orders with no matching customer.
+
+Calculate total spending per customer.
+
+Replace missing names with "Unknown".
+
+🌟 6. Challenge: Mini Analysis
+
+Using the sales dataset from Exercise 1:
+
+Extract month from order_date.
+
+Calculate monthly revenue.
+
+Find the best-selling product each month.
+
+Visualize monthly revenue using ggplot2.
+
+Create a summary table showing:
+
+Total revenue
+
+Total quantity sold
+
+Number of unique customers

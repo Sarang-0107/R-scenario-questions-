@@ -1,0 +1,245 @@
+🧠 Level 1 (Basic group_by + summarise)
+
+1️⃣ Average arrival delay per carrier
+
+2️⃣ Total number of flights per carrier
+
+3️⃣ Average departure delay per origin airport
+
+4️⃣ Maximum arrival delay per carrier
+
+5️⃣ Minimum departure delay per month
+
+🧠 Level 2 (Ranking / ordering questions)
+
+6️⃣ Find the flight with the highest arrival delay for each carrier
+
+7️⃣ Find the 3 flights with the largest departure delay
+
+8️⃣ Find the 2nd highest departure delay per carrier
+
+9️⃣ Find the carrier with the highest average delay
+
+10️⃣ Find top 5 flights with longest air_time
+
+🧠 Level 3 (Filtering within groups)
+
+11️⃣ Flights where arrival delay is greater than the average delay of that carrier
+
+12️⃣ Flights with delay greater than the overall average delay
+
+13️⃣ Flights that departed earlier than scheduled (dep_delay < 0)
+
+14️⃣ Carriers whose average delay is more than 30 minutes
+
+🧠 Level 4 (Mutate calculations)
+
+15️⃣ Create a new column for delay in hours (arr_delay / 60)
+
+16️⃣ Create a column showing total delay
+
+total_delay = dep_delay + arr_delay
+
+17️⃣ Calculate delay difference
+
+delay_diff = arr_delay - dep_delay
+🧠 Level 5 (Hard / Interview style)
+
+These are very commonly asked in data analyst interviews.
+
+18️⃣ Which carrier has the most flights?
+
+19️⃣ Top 3 destinations with highest average arrival delay
+
+20️⃣ Month with highest average departure delay
+
+21️⃣ Which destination receives the most flights?
+
+22️⃣ For each carrier, find the flight with the longest distance
+
+23️⃣ For each destination, find the earliest departure time
+
+24️⃣ Find flights with arrival delay in the top 10%
+
+⭐ Advanced (Very interview-like)
+
+25️⃣ For each carrier, find the 3rd highest arrival delay
+
+26️⃣ Find the carrier whose flights travel the longest average distance
+
+27️⃣ Find flights whose arrival delay is above the carrier median
+
+28️⃣ Find the fastest flight (highest speed)
+
+speed = distance / air_time
+
+29️⃣ Find the day with the most flights
+
+💡 Best practice approach
+Try using combinations of:
+
+group_by()
+
+summarise()
+
+mutate()
+
+arrange()
+
+slice_max()
+
+slice_min()
+
+filter()
+
+from dplyr.
+
+
+🧠 Scenario-Based Practice Problems
+✈️ Scenario 1 – Airport Delay Investigation
+
+A report says some carriers consistently arrive late.
+
+Tasks:
+
+Find the average arrival delay per carrier.
+
+Show only carriers whose average delay > 20 minutes.
+
+Sort carriers by highest delay.
+
+✈️ Scenario 2 – Worst Flights of Each Airline
+
+The airline wants to know their worst flights.
+
+Tasks:
+
+For each carrier, find the top 3 flights with highest arr_delay.
+
+Show carrier, flight, origin, destination, arr_delay.
+
+✈️ Scenario 3 – Most Busy Destinations
+
+An airport manager wants to know popular routes.
+
+Tasks:
+
+Count number of flights per destination (dest).
+
+Show top 10 busiest destinations.
+
+✈️ Scenario 4 – Late Departure Problem
+
+Operations team wants to detect extreme departure delays.
+
+Tasks:
+
+Find flights where dep_delay > 120 minutes.
+
+Show carrier, origin, dest, dep_delay.
+
+Sort by largest delay first.
+
+🧠 Ranking / Top-K (DSA-like problems)
+Problem 1
+
+Find the 2nd highest arrival delay per carrier.
+
+Problem 2
+
+Find the 3rd longest flight distance per destination.
+
+Problem 3
+
+Find the top 5 flights with longest air_time.
+
+Problem 4
+
+Find top 3 carriers with highest average arrival delay.
+
+🧠 Window / Group Thinking (Interview Level)
+Problem 5
+
+Find flights where:
+
+arr_delay > average delay of that carrier
+Problem 6
+
+Find the fastest flight.
+
+Hint: create speed variable
+
+speed = distance / air_time
+Problem 7
+
+Find fastest flight for each carrier.
+
+🧠 DSA-Style Data Problems
+
+These test thinking like algorithms.
+
+Problem 8 – Detect Early Flights
+
+Find flights where:
+
+arr_delay < 0 AND dep_delay < 0
+
+These flights departed and arrived early.
+
+Problem 9 – Longest Route
+
+Find the destination with maximum average distance.
+
+Problem 10 – Consistently Late Airlines
+
+Find carriers where more than 50% of flights are delayed.
+
+🧠 Harder (Real Interview Style)
+Problem 11 – Median Delay Per Carrier
+
+Find median arrival delay per carrier.
+
+Problem 12 – Flights Above 90th Percentile Delay
+
+Find flights with arrival delay above the 90th percentile.
+
+Problem 13 – Monthly Delay Pattern
+
+Find the month with highest average departure delay.
+
+Problem 14 – Busiest Day
+
+Find the day with most flights.
+
+Problem 15 – Route With Maximum Delay
+
+Find origin–destination pair with highest average arrival delay.
+
+🧠 SUPER HARD (DSA thinking)
+Problem 16 – Delay Improvement
+
+Create a column:
+
+delay_improvement = dep_delay - arr_delay
+
+Find flights where arrival delay improved vs departure delay.
+
+Problem 17 – Longest Distance Per Carrier
+
+For each carrier, find the flight with longest distance.
+
+Problem 18 – Route Speed Analysis
+
+Calculate speed:
+
+speed = distance / air_time
+
+Find top 5 fastest flights.
+
+Problem 19 – Most Reliable Carrier
+
+Find carrier with lowest average arrival delay.
+
+Problem 20 – Most Common Route
+
+Find the most frequent route (origin → dest).

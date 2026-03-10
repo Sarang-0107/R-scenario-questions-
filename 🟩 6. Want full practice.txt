@@ -1,0 +1,11 @@
+🟩 6. Want full practice?
+
+I can also give you:
+
+✔ Full mock datasets for DM, AE, EX, VS, LB
+✔ Tasks for converting them to SDTM
+✔ ADaM derivations (ASTDY, AENDY, TRTEMFL, ADY, ATPT, etc.)
+✔ Python/R-based interview questions
+✔ Real case study for Clinical Data Engineer
+
+Would you like SDTM full practice or ADaM full practice next?

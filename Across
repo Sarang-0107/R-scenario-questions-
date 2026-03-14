@@ -1,0 +1,81 @@
+library(tibble)
+
+sales <- tibble(
+  customer = c("A","A","B","B","C"),
+  price = c(100,120,80,90,150),
+  quantity = c(2,3,1,4,2),
+  discount = c(10,5,0,15,20)
+)
+sales
+
+sales |> mutate(across(where(is.numeric), ~ . * 1.10))
+
+sales |>  mutate(across(where(is.numeric), ~ . / 1000))
+
+sales |> mutate(across(price:discount, ~ . / 1000))
+
+sales  |> mutate(across(where(is.numeric), ~ (. - mean(.))/sd(.)))
+
+sales |>  mutate (across(price:discount, ~ (. -mean(.))/sd(.)))
+
+sales |>  mutate(across(where(is.numeric(na.rm = TRUE),~ifelse(. < 0, 0, .), ...names = "{.col}_no_neg")))                  
+
+#Multiply price and quantity by 2 using across() and an anonymous function.
+
+sales |>  mutate(across(c(price,quantity), ~ . * 2))
+
+#Create new columns where numeric values are squared
+
+sales |>  mutate( square_= (across(c(price, quantity, discount), ~ . *2)))
+
+sales <- sales |> 
+  mutate(across(where(is.numeric), ~ . ^2, .names = "{.col}_sq"))
+sales
+
+
+library(dplyr)
+
+sales <- sales %>%  mutate(across(where(is.numeric),  ~ . ^2, .names = "{.col}_sq"))
+sales
+
+#Calculate mean of all numeric columns grouped by customer
+sales |>  group_by(customer) |> summarise(across(where(is.numeric), mean))
+
+#Create new columns where numeric values are squared.
+sales  |> mutate(across(where(is.numeric), ~ .^2, .names = "{.col}_sq"))
+
+sales |>  summarise(across(where(is.numeric), ~ .^2, .names = "{.col}_sq"))
+
+#Round all numeric columns to 1 decimal place.
+
+sales |> mutate(across(where(is.numeric), ~round(.,.01)))
+
+#Create a new column:revenue = price * quantity Then use across() to calculate:mean,max
+
+sales |> mutate((revenue =price * quantity),across(mean(revenue),max(revenue))) 
+
+#Question 6 (Slightly harder)
+
+Replace discount values greater than 15 with 15 using an anonymous function.
+
+#Question 5
+
+#Create a new column:
+  
+  #revenue = price * quantity
+
+#Then use across() to calculate:
+  #mean
+  #max
+
+#Question 6 (Slightly harder)
+
+#Replace discount values greater than 15 with 15 using an anonymous function.
+
+#Question 7 (Analyst level)
+
+#Normalize all numeric columns between 0 and 1.
+
+#Formula:
+  
+  #(x - min(x)) / (max(x) - min(x))

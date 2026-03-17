@@ -1,0 +1,390 @@
+🔹 What is Regex in R? (Simple explanation)
+
+Regex (Regular Expressions) is just a way to search, match, and extract patterns from text.
+
+👉 Think of it like:
+
+“I don’t know the exact text, but I know the pattern I’m looking for.”
+
+Example:
+
+Phone numbers → always digits
+
+Names → letters
+
+IDs → mix of letters + numbers
+
+Regex helps you find these patterns.
+
+🔹 What is str_extract() in R?
+
+From the stringr package.
+
+👉 It means:
+
+“Give me the first match of a pattern from a string.”
+
+Syntax:
+str_extract(text, pattern)
+🔹 Now let’s understand patterns one by one
+1️⃣ str_extract(x, "\\d+")
+Pattern: \\d+
+
+\\d → any digit (0–9)
+
++ → one or more
+
+👉 Meaning:
+
+“Extract numbers (continuous digits)”
+
+Example:
+x <- "abc123xyz"
+str_extract(x, "\\d+")
+
+✅ Output:
+
+"123"
+2️⃣ str_extract(x, "[A-Za-z]+")
+Pattern: [A-Za-z]+
+
+A-Z → uppercase letters
+
+a-z → lowercase letters
+
+[] → “any of these”
+
++ → one or more
+
+👉 Meaning:
+
+“Extract letters only”
+
+Example:
+x <- "123abc456"
+str_extract(x, "[A-Za-z]+")
+
+✅ Output:
+
+"abc"
+3️⃣ str_extract(x, "^\\d+")
+Pattern: ^\\d+
+
+^ → start of string
+
+\\d+ → digits
+
+👉 Meaning:
+
+“Extract digits ONLY if they are at the beginning”
+
+Example:
+x <- "123abc"
+str_extract(x, "^\\d+")
+
+✅ Output:
+
+"123"
+
+❌ If:
+
+x <- "abc123"
+
+Output:
+
+NA
+
+(because digits are NOT at the start)
+
+4️⃣ str_extract(x, "\\d+$")
+Pattern: \\d+$
+
+\\d+ → digits
+
+$ → end of string
+
+👉 Meaning:
+
+“Extract digits ONLY if they are at the end”
+
+Example:
+x <- "abc123"
+str_extract(x, "\\d+$")
+
+✅ Output:
+
+"123"
+
+❌ If:
+
+x <- "123abc"
+
+Output:
+
+NA
+
+🔹 Key Symbols You MUST Remember (Interview Gold)
+| Symbol     | Meaning          |
+| ---------- | ---------------- |
+| `\\d`      | digit (0–9)      |
+| `[A-Za-z]` | letters          |
+| `+`        | one or more      |
+| `^`        | start of string  |
+| `$`        | end of string    |
+| `[]`       | match any inside |
+| `.`        | any character    |
+
+
+🔹 Simple Way to Explain in Interview 🎯
+
+If interviewer asks:
+
+👉 “What is regex?”
+
+You say:
+
+“Regex is a pattern matching technique used to search and extract specific patterns from text, like numbers, words, or formats.”
+
+👉 “Explain \\d+”
+
+“It matches one or more digits.”
+
+👉 “Difference between ^\\d+ and \\d+$”
+
+“^\\d+ extracts digits from the start, while \\d+$ extracts digits from the end of the string.”
+
+🔹 Real-Life Example (Very Useful)
+x <- c("ID123", "456ABC", "789")
+
+str_extract(x, "\\d+")
+
+✅ Output:
+
+"123" "456" "789"
+🔹 Pro Tip (Important)
+
+In R:
+
+You write \\d (double slash)
+
+Because R treats \ as escape character
+
+🔹 One-Line Summary
+
+Regex = “Find patterns in text”
+str_extract() = “Pull out that pattern”
+
+
+🧠 1. Practice Questions (with answers)
+
+Try these first yourself, then check answers.
+
+🔹 Q1
+x <- "abc123xyz"
+str_extract(x, "\\d+")
+
+👉 Answer:
+"123" (extracts digits)
+
+🔹 Q2
+x <- "456hello"
+str_extract(x, "^\\d+")
+
+👉 Answer:
+"456" (digits at start)
+
+🔹 Q3
+x <- "hello789"
+str_extract(x, "\\d+$")
+
+👉 Answer:
+"789" (digits at end)
+
+🔹 Q4
+x <- "123abc456"
+str_extract(x, "[A-Za-z]+")
+
+👉 Answer:
+"abc" (letters only)
+
+🔹 Q5 (Important)
+x <- "abc123xyz456"
+str_extract(x, "\\d+")
+
+👉 Answer:
+"123"
+
+⚠️ Important:
+
+str_extract() returns ONLY the first match
+
+🔹 Q6 (Tricky)
+x <- "abc"
+str_extract(x, "\\d+")
+
+👉 Answer:
+NA (no digits found)
+
+🔹 Q7 (Mixed)
+x <- "2024year"
+str_extract(x, "^\\d+")
+
+👉 Answer:
+"2024"
+
+🎯 2. Interview Tricks (This is GOLD)
+🔹 Trick 1: Always explain in 3 steps
+
+When asked:
+
+👉 “Explain this regex: ^\\d+”
+
+Say:
+
+^ → start of string
+
+\\d → digit
+
++ → one or more
+👉 So it extracts digits from the beginning
+
+🔹 Trick 2: Use real-life examples
+
+Instead of theory, say:
+
+“We use regex to extract phone numbers, IDs, or names from messy text.”
+
+🔹 Trick 3: Mention limitation
+
+Say this to sound advanced:
+
+“str_extract() returns only the first match. For multiple matches, we use str_extract_all().”
+
+🔹 Trick 4: Show R-specific knowledge
+
+👉 VERY IMPORTANT:
+
+“In R, we use \\d instead of \d because backslash is an escape character.”
+
+🔹 Trick 5: Compare patterns (Interviewers LOVE this)
+
+| Pattern | Meaning         |
+| ------- | --------------- |
+| `\\d+`  | digits anywhere |
+| `^\\d+` | digits at start |
+| `\\d+$` | digits at end   |
+
+
+🔹 Trick 6: Say this line (impressive)
+
+“Regex is powerful for data cleaning and preprocessing, especially in text data.”
+
+📄 3. Cheat Sheet (Save This 🔥)
+
+🔹 BASIC PATTERNS
+| Pattern    | Meaning               |
+| ---------- | --------------------- |
+| `\\d`      | digit (0–9)           |
+| `[A-Za-z]` | letters               |
+| `.`        | any character         |
+| `\\s`      | space                 |
+| `\\w`      | word (letter + digit) |
+
+
+🔹 QUANTIFIERS
+| Symbol | Meaning      |
+| ------ | ------------ |
+| `+`    | one or more  |
+| `*`    | zero or more |
+| `?`    | optional     |
+
+🔹 POSITION
+
+| Symbol | Meaning |
+| ------ | ------- |
+| `^`    | start   |
+| `$`    | end     |
+
+🔹 COMMON FUNCTIONS (R)
+
+From stringr package:
+str_extract()      # first match
+str_extract_all()  # all matches
+str_detect()       # TRUE/FALSE
+str_replace()      # replace text
+
+QUICK EXAMPLES
+str_extract("abc123", "\\d+")     # "123"
+str_extract("123abc", "^\\d+")    # "123"
+str_extract("abc123", "\\d+$")    # "123"
+str_extract("123abc", "[A-Za-z]+")# "abc"
+
+
+🧾 Final Interview Answer (Say this confidently)
+
+If interviewer says “Explain regex in R”:
+
+“Regex is used to identify and extract patterns from text. In R, we commonly use the stringr package with functions like str_extract().
+For example, \\d+ extracts digits, ^\\d+ extracts digits at the start, and \\d+$ extracts digits at the end.
+It is widely used in data cleaning and text processing.”
+
+
+🔹 Question 1
+x <- "Order ID: 98765"
+
+👉 Extract the number.
+
+🔹 Question 2
+x <- "abcXYZ123"
+
+👉 Extract only the letters.
+
+🔹 Question 3
+x <- "2026Report"
+
+👉 Extract numbers only if they are at the beginning.
+
+🔹 Question 4
+x <- "Report2026"
+
+👉 Extract numbers only if they are at the end.
+
+🔹 Question 5
+x <- "My phone is 9876543210"
+
+👉 Extract the phone number.
+
+🔹 Question 6
+x <- "Price is $450"
+
+👉 Extract the number.
+
+🔹 Question 7
+x <- "email: test123@gmail"
+
+👉 Extract the word before @.
+
+(Hint: think about letters + numbers)
+
+🔹 Question 8 (Tricky 🔥)
+x <- "abc123def456"
+
+👉 What does:
+
+str_extract(x, "\\d+")
+
+return?
+
+🔹 Question 9
+x <- "ID-7788"
+
+👉 Extract the digits.
+
+🔹 Question 10
+x <- "Start100End"
+
+👉 Extract:
+
+digits at start
+
+digits at end

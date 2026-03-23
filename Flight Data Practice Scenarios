@@ -1,0 +1,48 @@
+✈️ Flight Data Practice Scenarios
+🟢 Easy Level
+
+Find airports where more than 8% of flights are cancelled
+
+Find airlines where more than 15% of flights are delayed (dep_delay > 0)
+
+Find destinations where more than 10% of flights arrive late (>15 min)
+
+Find months where more than 5% of flights are cancelled
+
+Find days where more than 20% of flights depart late
+
+🟡 Medium Level
+
+Find airlines where average departure delay is greater than 25 minutes
+
+Find destinations where less than 70% of flights arrive on time
+
+Find routes (origin + destination) where more than 12% of flights are cancelled
+
+Find aircraft (tailnum) where more than 30% of flights are delayed
+
+Find days where average arrival delay is more than 30 minutes
+
+🔴 Advanced Level
+
+Find airports that have at least 100 flights AND more than 10% cancellations
+
+Find airlines where more than 25% flights are delayed AND average delay > 20 min
+
+Find routes where total flights > 50 AND more than 20% are late arrivals
+
+Find months where on-time performance is below 65%
+
+Find aircrafts that have at least 200 flights AND more than 40% delays
+
+🔥 Challenging (Interview-style)
+
+Find the top 5 airports with highest cancellation percentage
+
+Find airlines where cancellation rate increased month-over-month
+
+Find days where both departure AND arrival delays exceed 25%
+
+Find routes where average delay is high but cancellation rate is low (<5%)
+
+Find the airport with the most consistent on-time performance (lowest delay variance)

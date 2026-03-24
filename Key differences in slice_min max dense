@@ -1,0 +1,7 @@
+ 
+Task	                                   Use This
+I want only the top N values	          slice_max
+I want only the bottom N values	        slice_min
+I want ranks for every row	           dense_rank
+I want to keep ties	                    Both slice_min/slice_max and dense_rank do keep ties
+I want no rank gaps	                     dense_rank

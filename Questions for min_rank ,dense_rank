@@ -1,0 +1,118 @@
+⭐ 10 Intermediate Scenarios (Ranking + min_rank + slice_max logic)
+1. Top 5 Fastest Delivery Trucks Per City
+Each city tracks truck delivery times. Find the top 5 fastest trucks per city, including ties.
+2. Top 3 Most Active Customers Per Region
+Customer activity is measured by orders. Get the top 3 customers per region, including ties.
+3. Top 4 Most Popular Courses Per University
+Each university has course enrollment counts. Find top 4 enrolled courses per university with ties.
+4. Top 2 Longest Downtime Events Per Server Cluster
+Downtime events per server; identify top 2 longest per cluster, including ties.
+5. Top 5 Flights With Highest Taxi‑Out Time Per Airline
+Taxi-out time varies; find top 5 longest per airline.
+6. Top 3 Highest Rated Products Per Brand
+Ratings from 1–5. Select top 3 highest-rated items per brand including ties.
+7. Top 10 Customers With Highest Lifetime Value Per Segment
+Segments: “Gold”, “Silver”, “Bronze”. Rank customers by LTV.
+8. Top 4 Most Sold Items Per Quarter
+Sales quantity per SKU per quarter.
+9. Top 3 Most Visited Pages Per Website
+Websites track page views — find the top 3 per site, ties included.
+10. Top 2 Most Complained Issues Per Support Center
+Support center logs issue categories. Which 2 categories get most complaints?
+
+⭐ 10 Advanced, Real Industry‑Level Problems
+1. Telecom: Top 3 Cells With Highest Network Congestion by Region
+Rank congestion % across thousands of cell towers per region.
+2. Healthcare: Top 5 Doctors With Longest Avg Treatment Times Per Specialty
+Rank avg treatment duration across specialties.
+3. Finance: Top 10 Traders With Highest 30‑Day Profit Per Desk
+Trading desks need top performer insights with tie handling.
+4. Retail: Top 5 Products With Highest Return Rate Per Country
+Return rate = returns / sales. Rank at country level.
+5. Banking: Top 3 Branches With Most Fraudulent Transactions
+Identify suspicious activity per branch.
+6. Supply Chain: Top 10 Transport Routes With Highest Delay Risk
+Rank predicted risk scores per logistics zone.
+7. Education: Top 5 Students With Highest GPA Per Department
+Ties are common; must include all.
+8. Aviation: Top 5 Routes With Longest Avg Airborne Time Per Airline
+Using min_rank on avg airborne time.
+9. Energy: Top 3 Power Plants With Highest Outage Hours Per Region
+Rank outage sums.
+10. SaaS: Top 5 Users With Highest API Usage Per Subscription Plan
+Rank API call counts per plan tier.
+
+⭐ Full Practice Worksheet (30 Exercises)
+These are designed so you can practice min_rank, dense_rank, row_number, slice_max, slice_min, slice_head, etc.
+
+A. Ranking Exercises (1–10)
+1. Rank the top 3 longest employee tenures per department.
+2. Rank the 5 highest revenue products per brand.
+3. Find the top 2 busiest train stations per city.
+4. Rank the 4 most expensive menu items per restaurant chain.
+5. Rank the 3 highest-scoring players per team.
+6. Rank the longest 3 meetings per manager.
+7. Rank the top 10 most frequent error codes per application.
+8. Rank the 3 longest maintenance tasks per machine type.
+9. Rank the top 5 coldest days per state using temperature data.
+10. Rank the 2 fastest response time agents per call center.
+
+B. slice_max / slice_min Exercises (11–20)
+11. Get the 2 highest-priced SKUs per category.
+12. Get the 10 fastest delivery times per warehouse.
+13. Pull the 5 most sold items per store.
+14. Find the 3 lowest-rated hotels per country.
+15. Get the highest 4 electricity consumption days per household.
+16. Select the top 2 longest train routes per rail operator.
+17. Get top 8 movies per genre by revenue.
+18. Pick the 3 slowest CPU performance benchmark results per chip.
+19. Identify highest 5 rainfall days per region.
+20. Select 4 earliest flight departures per airport.
+
+C. row_number & dense_rank (21–30)
+21. Using row_number: choose the oldest employee per department.
+22. Using dense_rank: group products by price rank per category.
+23. Using row_number: pick the latest transaction per customer.
+24. Using dense_rank: find all branches that share top 3 profit positions.
+25. Using row_number: select the most recent event log per server.
+26. Using dense_rank: rank websites by monthly visitors.
+27. Using row_number: pick top 5 reviews per product chronologically.
+28. Using dense_rank: classify athletes by performance tier.
+29. Using row_number: extract the single cheapest item per vendor.
+30. Using dense_rank: determine the top 5 cities by pollution index.
+
+⭐ Mini Quiz (with Answers)
+Q1. What does min_rank() do when two values are tied?
+A: Assigns the same rank to ties and skips the next rank number.
+
+Q2. If scores are: 100, 100, 90, what are min_rank results?
+A: 1, 1, 3
+
+Q3. What does dense_rank() produce on the same list?
+A: 1, 1, 2 → no gaps.
+
+Q4. row_number() produces what?
+A: Always unique: 1, 2, 3.
+
+Q5. Which is best for “top N with ties”?
+A: min_rank() or dense_rank()
+(both support ties; dense_rank does not skip numbers).
+
+Q6. What does slice_max(x, n = 3) do?
+A: Returns rows with largest 3 values of x (ties included by default).
+
+Q7. What’s difference between slice_head(n=3) and slice_max()?
+A:
+
+slice_head() → returns first 3 rows in current order
+slice_max() → returns the rows with 3 highest values of a variable
+
+
+Q8. Want exactly one top row per group (no ties)? Use?
+A: row_number()
+
+Q9. Want groups ranked with ties but no gaps? Use?
+A: dense_rank()
+
+Q10. Want Olympic‑style ranks? (1,1,3,4…)
+A: min_rank()

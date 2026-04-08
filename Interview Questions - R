@@ -1,0 +1,255 @@
+🧠 🔥 100 INTERVIEW-STYLE SCENARIOS (WITH HINTS)
+🟢 SECTION 1: Data Filtering & Selection (1–15)
+Find rows where any numeric column > 100
+💡 Hint: Think row-wise logical aggregation
+Filter rows where all numeric values are positive
+💡 Hint: “all vs any” logic
+Select columns with missing values
+💡 Hint: Apply a function across columns
+Filter rows with at least 2 NA values
+💡 Hint: Row-wise counting
+Select only character columns
+💡 Hint: Column type helpers
+Filter rows where a specific column contains a pattern
+💡 Hint: String detection
+Select columns ending with "_delay"
+💡 Hint: Name-based selection
+Filter rows where values fall within a range
+💡 Hint: Combine multiple conditions
+Remove rows with any NA
+💡 Hint: Negate NA condition
+Keep rows where no numeric column exceeds threshold
+💡 Hint: Opposite of “any”
+Filter rows based on multiple column conditions
+💡 Hint: Logical AND/OR
+Select columns with variance > threshold
+💡 Hint: Summary statistic per column
+Filter rows where exactly one condition is TRUE
+💡 Hint: Count TRUE values
+Select columns with mean > threshold
+💡 Hint: Apply mean function column-wise
+Filter rows where a column is in a given list
+💡 Hint: Membership operator
+🔵 SECTION 2: Grouping & Aggregation (16–35)
+Average delay per carrier
+💡 Hint: Group then summarise
+Count flights per destination
+💡 Hint: Group + count
+Find max value per group
+💡 Hint: Summary function
+Filter groups with count > 10
+💡 Hint: Post-group filtering
+Median per group
+💡 Hint: Another summary stat
+Number of unique destinations per carrier
+💡 Hint: Distinct count
+Total delay per day
+💡 Hint: Aggregate over time
+Groups where average > threshold
+💡 Hint: Filter after summarise
+Top group by frequency
+💡 Hint: Sort + slice
+Multiple summaries in one step
+💡 Hint: Summarise multiple columns
+Group by multiple variables
+💡 Hint: Multi-key grouping
+Count distinct combinations
+💡 Hint: Combination uniqueness
+Identify smallest group
+💡 Hint: Min count
+Compute proportion per group
+💡 Hint: Divide by total
+Rank groups by summary
+💡 Hint: Order results
+Compare group means
+💡 Hint: Group vs overall
+Filter top 3 groups
+💡 Hint: Slice within grouped data
+Aggregation with NA handling
+💡 Hint: Ignore missing values
+Group and retain original rows
+💡 Hint: Use mutate instead of summarise
+Identify groups with no variation
+💡 Hint: Check unique values count
+🟡 SECTION 3: Mutation & Feature Engineering (36–55)
+Create binary flag
+💡 Hint: Condition → TRUE/FALSE
+Categorize values into bins
+💡 Hint: Multi-condition mapping
+Calculate difference between two columns
+💡 Hint: Simple arithmetic
+Normalize numeric columns
+💡 Hint: Mean & SD
+Create interaction variable
+💡 Hint: Combine columns
+Flag outliers
+💡 Hint: Threshold logic
+Compute cumulative sum
+💡 Hint: Running function
+Calculate percent change
+💡 Hint: Relative difference
+Replace missing values
+💡 Hint: Conditional replacement
+Create rank column
+💡 Hint: Ranking function
+Derive lag variable
+💡 Hint: Previous row
+Lead variable
+💡 Hint: Next row
+Conditional transformation
+💡 Hint: Case logic
+Scale values between 0–1
+💡 Hint: Min-max scaling
+Combine multiple columns into one
+💡 Hint: Concatenation
+Extract part of string
+💡 Hint: String functions
+Create date-based features
+💡 Hint: Year, month extraction
+Flag duplicates
+💡 Hint: Count occurrences
+Create cumulative count per group
+💡 Hint: Row numbering
+Replace values based on condition
+💡 Hint: Conditional overwrite
+🔴 SECTION 4: Window Functions (56–70)
+Rank within group
+💡 Hint: Dense ranking
+Top 3 per group
+💡 Hint: Slice within groups
+Running total per group
+💡 Hint: Cumulative sum
+Difference from previous row
+💡 Hint: Lag
+Percent rank
+💡 Hint: Relative ranking
+First value per group
+💡 Hint: First element
+Last value per group
+💡 Hint: Last element
+Rolling average
+💡 Hint: Sliding window
+Identify change points
+💡 Hint: Compare with lag
+Rank with ties
+💡 Hint: Dense vs min rank
+Running max/min
+💡 Hint: Cumulative extrema
+Lead comparison
+💡 Hint: Next row difference
+Count rows before current
+💡 Hint: Row number
+Reset calculation per group
+💡 Hint: Group-wise logic
+Moving difference
+💡 Hint: Lag/lead combo
+🟣 SECTION 5: Duplicate & Data Quality (71–85)
+Identify duplicates
+💡 Hint: Count occurrences
+Remove duplicates
+💡 Hint: Keep unique
+Keep latest duplicate
+💡 Hint: Sort then deduplicate
+Count duplicates per group
+💡 Hint: Add count
+Flag duplicate rows
+💡 Hint: Boolean flag
+Validate unique ID
+💡 Hint: Check duplicates
+Identify inconsistent values
+💡 Hint: Multiple values per group
+Detect missing key fields
+💡 Hint: NA check
+Replace invalid values
+💡 Hint: Conditional logic
+Check referential integrity
+💡 Hint: Compare datasets
+Identify out-of-range values
+💡 Hint: Threshold checks
+Count missing per column
+💡 Hint: Column-wise NA count
+Identify constant columns
+💡 Hint: Single unique value
+Validate categorical values
+💡 Hint: Allowed list
+Detect anomalies
+💡 Hint: Extreme values
+⚫ SECTION 6: Clinical / Real-World Scenarios (86–100)
+
+(Based on SDTM logic)
+
+Identify baseline record
+💡 Hint: First visit per subject
+Calculate change from baseline
+💡 Hint: Group + subtract baseline
+Flag abnormal lab values
+💡 Hint: Threshold rules
+Count adverse events per subject
+💡 Hint: Group + count
+Identify subjects with severe AE
+💡 Hint: Filter severity
+Flag treatment-emergent events
+💡 Hint: Compare timing vs treatment
+Identify subjects missing visits
+💡 Hint: Expected vs actual visits
+Find subjects with all values normal
+💡 Hint: All condition per group
+Detect protocol deviations
+💡 Hint: Rule violations
+Summarize safety population
+💡 Hint: Aggregate subject-level
+Identify last observation per subject
+💡 Hint: Max visit/time
+Calculate exposure duration
+💡 Hint: Date difference
+Flag responders vs non-responders
+💡 Hint: Threshold improvement
+Compare treatment groups
+💡 Hint: Group summaries
+Create subject-level dataset
+💡 Hint: Collapse multiple rows into one
+🚀 MINI PROJECTS (REAL INTERVIEW LEVEL)
+🧪 Project 1: Clinical Trial Pipeline
+
+Goal: Simulate real clinical workflow
+
+Tasks:
+Create subject-level dataset
+Derive baseline values
+Calculate change from baseline
+Flag responders
+Generate AE summary
+Compare treatment groups
+
+💡 Hint: Think in layers → raw → subject → summary
+
+✈️ Project 2: Flight Delay Analysis
+Tasks:
+Identify worst-performing carriers
+Find peak delay hours
+Rank top delayed routes
+Calculate delay trends over time
+Flag extreme delays
+
+💡 Hint: Combine grouping + window functions
+
+🔗 Project 3: Clinical + Flights Hybrid Thinking
+
+(VERY IMPORTANT for interviews)
+
+Tasks:
+Treat carrier = treatment group
+Treat delay = lab value
+Define baseline delay
+Calculate improvement/deterioration
+Flag “responders” (delay reduced)
+
+💡 Hint: Translate business → clinical logic
+
+🧠 Project 4: Data Quality Framework
+Tasks:
+Identify missing values
+Detect duplicates
+Validate ranges
+Flag inconsistencies
+Produce data quality report

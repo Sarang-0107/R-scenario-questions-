@@ -1,0 +1,73 @@
+library(dplyr)
+
+customers <- tibble(
+  customer_id = c(1, 2, 3, 4, 5),
+  name = c("Alice", "Bob", "Charlie", "David", "Eva"),
+  city = c("Chennai", "Mumbai", "Delhi", "Chennai", "Bangalore")
+)
+
+orders <- tibble(
+  order_id = c(101, 102, 103, 104, 105, 106),
+  customer_id = c(1, 2, 2, 3, 6, NA),
+  amount = c(500, 700, 300, 400, 1000, 200)
+)
+
+payments <- tibble(
+  payment_id = c(1, 2, 3, 4),
+  order_id = c(101, 102, 104, 999),
+  status = c("Paid", "Paid", "Pending", "Failed")
+)
+
+products <- tibble(
+  product_id = c(10, 11, 12, 13),
+  product_name = c("Phone", "Laptop", "Tablet", "Watch")
+)
+
+order_items <- tibble(
+  order_id = c(101, 101, 102, 103, 103, 104),
+  product_id = c(10, 11, 10, 12, 11, 10)
+)
+
+employees <- tibble(
+  emp_id = c(1, 2, 3, 4),
+  name = c("A", "B", "C", "D"),
+  manager_id = c(NA, 1, 1, 2)
+)
+
+
+🍋 Practice Scenarios
+🔵 INNER JOIN
+Show customers who placed orders
+Show orders that have valid customers
+Show order items with valid products
+🔵 LEFT JOIN
+Show all customers with their orders
+Show all orders with payment status
+Show all products with order usage
+🔵 RIGHT JOIN
+Show all orders even if customer info is missing
+Show all payments even if order is missing
+🔵 FULL JOIN
+Combine customers and orders (include everything)
+Combine orders and payments (include unmatched both sides)
+🔵 ANTI JOIN
+Find customers with no orders
+Find orders with invalid customers
+Find orders with no payments
+Find products never ordered
+🔵 SEMI JOIN
+Show customers who made at least one order
+Show orders that have payments
+🔵 MANY-TO-MANY
+Show all products in each order
+Count number of products per order
+🔵 SELF JOIN
+Show employee with their manager
+Show employees who share same manager
+🔵 MULTI-TABLE JOIN
+Show customer + order + payment details
+Show order + product + customer info
+🔵 DEBUGGING JOINS
+Check if joining orders and order_items increases rows
+Check if joining customers and orders keeps row count stable
+Identify joins that create duplicates

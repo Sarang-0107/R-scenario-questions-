@@ -1,0 +1,35 @@
+#🍋 Room & Booking Join Scenarios
+#🔵 Basic Overlap
+#Find bookings that overlap with room availability
+#Find rooms that have at least one booking overlap
+#🔵 No Match Cases
+#Find bookings that do not match any room availability
+#Find rooms that were never booked
+#🔵 Full vs Partial Overlap
+#Find bookings fully inside a room’s availability period
+#Find bookings that partially overlap with availability
+#Find bookings that extend beyond availability dates
+#🔵 Conflict Detection
+#Find bookings that overlap with other bookings (double booking)
+#Find rooms that have conflicting bookings at the same time
+#🔵 Time-Based Conditions
+#Find bookings that start within an availability window
+#Find bookings that end within an availability window
+#Find bookings that start before availability but end inside it
+#🔵 Gap Analysis
+#Find bookings that do not fit into any availability window
+#Find gaps between bookings for each room
+#Find unused availability periods
+#🔵 Nearest Matching
+#Match each booking with the closest availability period
+#Find the nearest available room for each booking
+#🔵 Multi-Match Situations
+#Find bookings that match multiple availability periods
+#Find rooms that are linked to multiple bookings
+#🔵 Filtering Logic
+#Find bookings longer than room availability
+#Find availability periods shorter than bookings
+#🔵 Real-World Simulation
+#Find rooms available for a given date range
+#Find bookings that violate room capacity rules
+#Find peak booking overlap periods per room

@@ -1,0 +1,102 @@
+🍋 1. Different Column Names (Most common)
+Scenario:
+
+Flight destination code vs airport code
+
+flights |> 
+  left_join(airports, by = join_by(dest == faa))
+
+👉 Clean and readable compared to:
+
+by = c("dest" = "faa")
+🍋 2. Multiple Conditions (Cleaner syntax)
+Scenario:
+
+Match by airport AND date
+
+flights |> 
+  left_join(weather, by = join_by(origin, year, month, day))
+
+👉 No need for:
+
+by = c("origin", "year", "month", "day")
+🍋 3. Matching Different Column Names + Multiple Conditions
+Scenario:
+
+Different names + multiple keys
+
+flights |> 
+  left_join(weather, by = join_by(origin == origin, time_hour == time_hour))
+🍋 4. Range Join (🔥 Very powerful)
+Scenario:
+
+Match orders to discount periods
+
+orders |> 
+  left_join(discounts, by = join_by(order_date >= start_date,
+                                   order_date <= end_date))
+
+👉 Meaning:
+
+Match orders that fall within a date range
+🍋 5. Rolling / Nearest Match (Time-based)
+Scenario:
+
+Match each flight with closest weather record
+
+flights |> 
+  left_join(weather, by = join_by(origin, closest(time_hour)))
+
+👉 Finds nearest time match automatically
+
+🍋 6. Less Than / Greater Than Joins
+Scenario:
+
+Find all previous transactions before current one
+
+transactions |> 
+  inner_join(transactions, by = join_by(user_id, time >= time))
+
+👉 Compare rows within same table
+
+🍋 7. Self Join with Condition
+Scenario:
+
+Find earlier flights of same plane
+
+flights |> 
+  inner_join(flights, by = join_by(tailnum, time_hour.x < time_hour.y))
+
+👉 Compare flights within same aircraft
+
+🍋 8. Interval Overlap (Advanced 🚀)
+Scenario:
+
+Match bookings with room availability
+
+bookings |> 
+  inner_join(rooms, by = join_by(start_date <= end_date,
+                                end_date >= start_date))
+
+👉 Detect overlapping dates
+
+🍋 9. Cleaner Debugging
+Scenario:
+
+Explicit logic → easier to read
+
+flights |> 
+  left_join(weather, by = join_by(origin == origin,
+                                 time_hour == time_hour))
+
+👉 You see the logic clearly
+
+🍋 10. Combining Everything
+Scenario:
+
+Complex real-world join
+
+orders |> 
+  left_join(delivery, by = join_by(customer_id,
+                                  order_date >= ship_start,
+                                  order_date <= ship_end))

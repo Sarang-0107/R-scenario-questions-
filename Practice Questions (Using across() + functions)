@@ -1,0 +1,46 @@
+🧠 Practice Questions (Using across() + functions)
+🟢 Basic Level (1–6)
+1.	Convert all numeric columns to integers using mutate() and across(). 
+2.	Round all numeric columns to 2 decimal places. 
+3.	Replace all NA values in numeric columns with 0. 
+4.	Apply log() transformation to all numeric columns. 
+5.	Multiply all numeric columns by 100. 
+6.	Convert all character columns to uppercase. 
+________________________________________
+🟡 Intermediate Level (7–14)
+7.	Calculate mean of all numeric columns using summarise(across()). 
+8.	Calculate both mean and median for all numeric columns. 
+9.	Get standard deviation of all numeric columns grouped by region. 
+10.	Count number of NA values in each column. 
+11.	Create new columns with suffix _scaled by scaling all numeric columns. 
+12.	Apply different functions: 
+•	mean for numeric columns 
+•	n_distinct for character columns 
+13.	Rename all numeric columns by adding prefix "num_". 
+14.	Create new columns where: 
+•	price → price_log 
+•	quantity → quantity_sqrt
+using across() selectively. 
+________________________________________
+🔵 Advanced Level (15–20)
+15.	Group by product_category and calculate: 
+•	mean 
+•	max 
+•	min
+for all numeric columns. 
+16.	Use across() with a custom function:
+→ Normalize all numeric columns (min-max scaling). 
+17.	Create a summary table where: 
+•	numeric columns → mean 
+•	character columns → first value 
+18.	Apply multiple functions (mean, sd) and control column names using .names. 
+19.	Filter rows where any numeric column is greater than 1000 using if_any(). 
+20.	Filter rows where all numeric columns are positive using if_all(). 
+________________________________________
+💡 Bonus Challenge (Real Interview Level)
+21.	Using across(), create a pipeline that: 
+•	Groups by region 
+•	Calculates mean of numeric columns 
+•	Rounds results 
+•	Renames columns with prefix "avg_"
+

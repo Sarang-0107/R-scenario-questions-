@@ -1,0 +1,171 @@
+🔹 PART 1: %in%, Subqueries & Filtering Logic
+✅ Scenario 1: Late-arrival destinations
+Question:
+Find all flights whose destination airport has ever had a flight delayed by more than 90 minutes.
+💡 Think:
+
+Inner query → destinations with arr_delay > 90
+Outer query → flights going to those destinations
+
+🧠 Concepts:
+
+%in%
+pull()
+Subquery thinking
+
+
+✅ Scenario 2: Airports with no delays
+Question:
+List destination airports that never had any arrival delay (arr_delay ≤ 0 or NA).
+💡 Think:
+
+One set = all airports
+Another set = delayed destinations
+Exclude using logic → anti_join() or setdiff()
+
+
+✅ Scenario 3: Flights going to busy airports
+Question:
+Find flights whose destination airport appears more than 5000 times in the dataset.
+💡 Think:
+
+Group + count
+Filter
+Use result as lookup (%in% or semi_join())
+
+
+🔹 PART 2: EXISTS Logic → semi_join() & anti_join()
+✅ Scenario 4: Flights with weather records
+Question:
+Find all flights that have corresponding weather data (same origin and time_hour).
+✅ You already saw this — now re‑implement it from memory.
+
+✅ Scenario 5: Flights without weather info
+Question:
+Find all flights that do NOT have any weather data recorded.
+💡 Think:
+
+SQL: NOT EXISTS
+dplyr: anti_join()
+
+
+✅ Scenario 6: Airports that never appear as origin
+Question:
+Find airports that never appear as an origin airport in flights.
+💡 Think:
+
+One table: airports
+Another: flights
+Remove existing matches
+
+
+🔹 PART 3: Window Functions & Ranking (dense_rank)
+✅ Scenario 7: Top delayed flights per destination
+Question:
+For each destination, find the top 3 most delayed flights.
+🧠 Concepts:
+
+group_by(dest)
+dense_rank(desc(arr_delay))
+Filter rank <= 3
+
+👉 Bonus: What happens if arr_delay is NA?
+
+✅ Scenario 8: Best on-time flights
+Question:
+For each origin airport, find the earliest arriving flight.
+💡 Think:
+
+Ascending rank
+Handle ties correctly
+
+
+✅ Scenario 9: Rank months by average delay
+Question:
+Rank months by their average arrival delay, highest delay first.
+🧠 Concepts:
+
+group_by(month)
+summarise()
+dense_rank(desc())
+
+
+🔹 PART 4: Join vs Subquery Thinking (Very Interview-Oriented)
+✅ Scenario 10: Replace %in% with joins
+Question:
+You wrote code using %in%. Rewrite it using:
+
+semi_join()
+left_join()
+
+💡 Ask yourself:
+
+Am I filtering rows or adding columns?
+
+
+✅ Scenario 11: Flights with airline names
+Question:
+Add airline full names to flights (carrier → name).
+✅ This forces you to choose:
+
+subquery ❌
+join ✅
+
+
+🔹 PART 5: Row-wise vs Column-wise Combining
+✅ Scenario 12: Combine summer flights
+Question:
+Combine all flights from June, July, and August into one dataset.
+🧠 Concept:
+
+bind_rows()
+
+
+✅ Scenario 13: Dangerous bind_cols
+Question:
+Split flights into two dataframes and recombine column-wise.
+💡 Then answer:
+
+Why is this dangerous?
+What assumption are you making?
+
+(This is a thinking question, not just code.)
+
+🔹 PART 6: Set Operations (VERY TESTABLE)
+Using your a and b tables:
+✅ Scenario 14: Students transferring
+Imagine:
+
+a = students in Semester 1
+b = students in Semester 2
+
+Questions:
+
+Students present in both semesters?
+New students in Semester 2?
+Students who dropped out?
+Total unique students across semesters?
+
+🧠 Map each to:
+
+intersect()
+setdiff()
+union()
+
+
+✅ Scenario 15: Data quality check
+Question:
+Find rows that exist in exactly one table but not the other.
+💡 Think:
+
+symdiff()
+
+
+🔹 PART 7: Conceptual / Interview Logic Questions
+Answer these in words before code:
+
+When should you avoid subqueries?
+Why is semi_join() faster than %in%?
+Why does dense_rank() need ordering?
+Why can bind_cols() silently corrupt data?
+Which is safer for filtering: joins or subqueries — and why?

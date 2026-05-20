@@ -1,0 +1,567 @@
+library(dplyr)
+
+set.seed(123)  # for reproducibility
+
+# Create 70 room availability records
+rooms <- tibble(
+  room_id = sample(100:120, 70, replace = TRUE),
+  start_date = as.Date("2024-01-01") + sample(0:60, 70, replace = TRUE),
+  end_date   = start_date + sample(2:10, 70, replace = TRUE)
+)
+rooms
+View(rooms)
+# Create 80 booking records
+bookings <- tibble(
+  booking_id = 1:80,
+  room_id = sample(100:125, 80, replace = TRUE),  # includes some invalid rooms
+  start_date = as.Date("2024-01-01") + sample(0:60, 80, replace = TRUE),
+  end_date   = start_date + sample(1:12, 80, replace = TRUE)
+)
+bookings
+View(bookings)
+
+
+✅ Summary
+
+Task                         -> Correct approach
+--------------------------------------------------------------
+Never booked rooms           -> anti_join(rooms, bookings, by = "room_id")
+
+Rooms with matching bookings -> semi_join(rooms, bookings, by = "room_id")
+
+Date overlap problems        -> Use join_by() with conditions
+
+
+Never booked rooms     : anti_join(rooms, bookings, by = "room_id")
+Matching bookings      : semi_join(rooms, bookings, by = "room_id")
+Date overlaps          : use join_by() with conditions
+
+🔥 Important Fixes
+✅ 1. Use semi_join, not anti_join
+You said:
+
+Find bookings fully inside a room’s availability period
+
+👉 That means:
+
+You want matching records, not non-matching
+
+So:
+
+✅ semi_join() → keep matches
+❌ anti_join() → removes matches
+
+Situation                      Approach
+ Need AND conditions          use inside join_by() 
+✅Need OR conditions         split joins + combine 
+✅Want “not inside”           use anti_join() ✅
+
+📊 Overlap condition (correct one)
+start_date.x <= end_date.y &  end_date.x >= start_date.y 
+👉 This is the standard overlap logic
+
+Double booking = same room + overlapping dates
+
+Problem                     Condition
+Overlap                    start <= end & end >= start 
+Samerow issue              remove with ID filter
+Double booking              self join
+
+Conflicts = same room + overlapping dates + different booking_id
+Conflict = same room + overlapping dates
+
+
+You want bookings whose end_date falls inside a room availability window:
+
+availability_start <= booking_end <= availability_end
+Room availability:
+2025-05-01  -->  2025-05-10
+availability_start = 2025-05-01
+availability_end = 2025-05-10
+Now suppose a booking ends on:
+booking_end = 2025-05-07
+We check:
+2025-05-01 <= 2025-05-07 <= 2025-05-10
+Is this true?
+
+2025-05-07 >= 2025-05-01 → YES
+2025-05-07 <= 2025-05-10 → YES
+
+You want bookings whose start_date falls inside a room availability window:
+
+availability_start <= booking_start <= availability_end
+
+
+can we used .keep=TRUE
+Short answer: no, not with semi_join().
+
+Why?
+
+.keep_all = TRUE (or .keep = TRUE in some contexts) is not an argument for semi_join().
+
+semi_join() only returns rows from the left table (bookings)
+It never brings columns from rooms
+So there’s nothing extra to “keep”
+What .keep_all = TRUE actually does
+
+It is used in functions like:
+
+inner_join()
+left_join()
+TaskCorrect approachNever booked roomsanti_join(rooms, bookings, by="room_id")Rooms with matching bookingssemi_join(rooms, bookings)Date overlap problemsUse join_by() with conditions
+#🍋 Room & Booking Join Scenarios
+#🔵 Basic Overlap
+#Find bookings that overlap with room availability
+#Find rooms that have at least one booking overlap
+#🔵 No Match Cases
+#Find bookings that do not match any room availability
+#Find rooms that were never booked
+#🔵 Full vs Partial Overlap
+#Find bookings fully inside a room’s availability period
+#Find bookings that partially overlap with availability
+#Find bookings that extend beyond availability dates
+#🔵 Conflict Detection
+#Find bookings that overlap with other bookings (double booking)
+#Find rooms that have conflicting bookings at the same time
+#🔵 Time-Based Conditions
+#Find bookings that start within an availability window --> Booking start must lie BETWEEN room start and room end  semi_join() keeps only rows from bookings that match an availability window in rooms.
+#Find bookings that end within an availability window
+#Find bookings that start before availability but end inside it
+#🔵 Gap Analysis
+#Find bookings that do not fit into any availability window
+#Find gaps between bookings for each room
+#Find unused availability periods
+#🔵 Nearest Matching
+#Match each booking with the closest availability period
+#Find the nearest available room for each booking
+#🔵 Multi-Match Situations
+#Find bookings that match multiple availability periods
+#Find rooms that are linked to multiple bookings
+#🔵 Filtering Logic
+#Find bookings longer than room availability
+#Find availability periods shorter than bookings
+#🔵 Real-World Simulation
+#Find rooms available for a given date range
+#Find bookings that violate room capacity rules
+#Find peak booking overlap periods per room
+
+*******************************************************************************************************************************************************************************************
+🍋 ROOM & BOOKING JOIN SCENARIOS CHEAT SHEET (dplyr + join_by)
+
+------------------------------------------------------------
+🔵 BASIC OVERLAP
+------------------------------------------------------------
+
+1) Bookings that overlap with room availability
+
+LOGIC:
+booking_start <= availability_end
+AND
+booking_end >= availability_start
+
+INTERPRETATION:
+Any intersection between two time ranges
+
+------------------------------------------------------------
+
+2) Rooms that have at least one booking overlap
+
+LOGIC:
+Same overlap condition, but grouped by room_id
+
+TIP:
+Use inner_join + filter OR semi_join on bookings
+
+------------------------------------------------------------
+🔵 NO MATCH CASES
+------------------------------------------------------------
+
+3) Bookings that do NOT match any room availability
+
+LOGIC:
+anti_join(bookings, rooms, by = "room_id")
+
+INTERPRETATION:
+No relationship at all
+
+------------------------------------------------------------
+
+4) Rooms never booked
+
+LOGIC:
+anti_join(rooms, bookings, by = "room_id")
+
+------------------------------------------------------------
+🔵 FULL vs PARTIAL OVERLAP
+------------------------------------------------------------
+
+5) Booking fully inside availability
+
+LOGIC:
+availability_start <= booking_start
+AND
+booking_end <= availability_end
+
+INTERPRETATION:
+Booking is completely contained inside window
+
+------------------------------------------------------------
+
+6) Booking partially overlaps availability
+
+CASE A: starts before, ends inside
+booking_start < availability_start
+AND booking_end inside window
+
+CASE B: starts inside, ends after
+booking_start inside window
+AND booking_end > availability_end
+
+INTERPRETATION:
+One boundary outside, one inside
+
+------------------------------------------------------------
+
+7) Booking extends beyond availability
+
+LOGIC:
+booking_start < availability_start
+AND booking_end > availability_end
+
+INTERPRETATION:
+Booking fully covers availability window
+
+------------------------------------------------------------
+🔵 CONFLICT DETECTION
+------------------------------------------------------------
+
+8) Double booking (overlapping bookings same room)
+
+LOGIC:
+start1 <= end2
+AND end1 >= start2
+AND same room_id
+
+INTERPRETATION:
+Two bookings collide in time
+
+------------------------------------------------------------
+🔵 TIME-BASED WINDOW CHECKS
+------------------------------------------------------------
+
+9) Booking start inside availability
+
+LOGIC:
+availability_start <= booking_start <= availability_end
+
+INTERPRETATION:
+Only START is checked
+
+------------------------------------------------------------
+
+10) Booking end inside availability
+
+LOGIC:
+availability_start <= booking_end <= availability_end
+
+INTERPRETATION:
+Only END is checked
+
+------------------------------------------------------------
+
+11) Booking starts before availability but ends inside
+
+LOGIC:
+booking_start < availability_start
+AND booking_end inside window
+
+INTERPRETATION:
+Late fitting booking
+
+------------------------------------------------------------
+🔵 GAP ANALYSIS
+------------------------------------------------------------
+
+12) Bookings not fitting any availability
+
+LOGIC:
+anti_join OR NOT EXISTS match
+
+INTERPRETATION:
+No valid window for booking
+
+------------------------------------------------------------
+
+13) Gaps between bookings
+
+LOGIC IDEA:
+order by date per room → lag() / lead()
+
+INTERPRETATION:
+Time between bookings
+
+------------------------------------------------------------
+
+14) Unused availability periods
+
+LOGIC:
+availability rows with no booking overlap
+
+------------------------------------------------------------
+🔵 NEAREST MATCHING
+------------------------------------------------------------
+
+15) Closest availability to booking
+
+LOGIC IDEA:
+compute distance between dates:
+abs(booking_start - availability_start)
+
+INTERPRETATION:
+Not exact match, but nearest time window
+
+------------------------------------------------------------
+🔵 MULTI-MATCH
+------------------------------------------------------------
+
+16) Bookings matching multiple availability windows
+
+LOGIC:
+join_by only (no filtering collapse)
+
+INTERPRETATION:
+One booking → multiple valid windows
+
+------------------------------------------------------------
+
+🔵 FILTERING LOGIC RULE (VERY IMPORTANT)
+
+WHENEVER YOU SEE:
+"within window", "inside range"
+→ use BETWEEN logic:
+start <= value <= end
+
+WHENEVER YOU SEE:
+"overlap"
+→ use:
+start1 <= end2 AND end1 >= start2
+
+WHENEVER YOU SEE:
+"before / after"
+→ use strict inequalities (< or >)
+
+------------------------------------------------------------
+🧠 FINAL INTERPRETATION RULE
+
+Think every question as:
+
+1) WHAT VALUE AM I CHECKING?
+   - start_date OR end_date
+
+2) WHAT RELATIONSHIP?
+   - inside window
+   - overlap
+   - outside window
+
+3) WHICH SIDE?
+   - booking vs availability vs booking vs booking
+*******************************************************************************************************************************************************************************************
+
+*******************************************************************************************************************************************************************************************
+🍋 ROOM & BOOKING JOIN SCENARIOS MASTER CHEAT SHEET (ALL POSSIBILITIES)
+
+This sheet is about HOW TO THINK, not just memorising cases.
+
+------------------------------------------------------------
+🔴 1. CORE TIME RELATIONSHIP TYPES (MOST IMPORTANT)
+------------------------------------------------------------
+
+Every question is one of these 4 patterns:
+
+A) INSIDE (contained)
+booking is fully inside window
+
+availability_start <= booking_start
+AND booking_end <= availability_end
+
+------------------------------------------------------------
+
+B) OVERLAP (any intersection)
+any part touches
+
+booking_start <= availability_end
+AND booking_end >= availability_start
+
+------------------------------------------------------------
+
+C) OUTSIDE (no overlap)
+completely separate
+
+booking_end < availability_start
+OR booking_start > availability_end
+
+------------------------------------------------------------
+
+D) PARTIAL OVERLAP (boundary crossing)
+mix of inside + outside
+
+CASE 1: starts before, ends inside
+booking_start < availability_start
+AND booking_end BETWEEN window
+
+CASE 2: starts inside, ends after
+booking_start BETWEEN window
+AND booking_end > availability_end
+
+CASE 3: covers whole window
+booking_start < availability_start
+AND booking_end > availability_end
+
+------------------------------------------------------------
+🔵 2. SINGLE POINT CHECKS (VERY COMMON)
+------------------------------------------------------------
+
+A) START ONLY INSIDE WINDOW
+availability_start <= booking_start <= availability_end
+
+B) END ONLY INSIDE WINDOW
+availability_start <= booking_end <= availability_end
+
+C) START BEFORE WINDOW
+booking_start < availability_start
+
+D) END AFTER WINDOW
+booking_end > availability_end
+
+------------------------------------------------------------
+🟡 3. BOOKING vs BOOKING (CONFLICTS)
+------------------------------------------------------------
+
+A) DOUBLE BOOKING (same room)
+start1 <= end2 AND end1 >= start2
+
+B) EXACT SAME BOOKING
+start1 = start2 AND end1 = end2
+
+C) BACK-TO-BACK (no overlap)
+end1 = start2 OR end1 < start2
+
+D) GAP BETWEEN BOOKINGS
+end1 < start2
+
+------------------------------------------------------------
+🟢 4. ROOM vs BOOKING LOGIC TYPES
+------------------------------------------------------------
+
+A) VALID BOOKING
+inside availability window
+
+B) INVALID BOOKING (outside all windows)
+no match found (anti_join)
+
+C) MULTI-MATCH BOOKING
+one booking fits multiple availability windows
+
+D) PARTIAL FIT
+booking overlaps but not fully contained
+
+------------------------------------------------------------
+🔵 5. JOIN STRATEGY GUIDE (dplyr THINKING)
+------------------------------------------------------------
+
+INNER_JOIN:
+→ find actual matches + combine data
+
+LEFT_JOIN:
+→ keep all bookings, add room info
+
+SEMI_JOIN:
+→ filter bookings (no extra columns)
+
+ANTI_JOIN:
+→ find missing/unmatched rows
+
+------------------------------------------------------------
+🔴 6. HOW TO TRANSLATE ANY QUESTION (IMPORTANT)
+------------------------------------------------------------
+
+STEP 1: Identify OBJECTS
+- booking vs room
+- booking vs booking
+
+STEP 2: Identify VALUE CHECKED
+- start_date OR end_date OR both
+
+STEP 3: Identify RELATION TYPE
+
+WORDS → LOGIC
+
+"inside / within" → BETWEEN
+"overlap" → interval overlap formula
+"before" → <
+"after" → >
+"touching" → <= or >=
+"no match" → anti_join
+"conflict" → overlap
+
+------------------------------------------------------------
+🟣 7. UNIVERSAL FORMULAS (MEMORISE THESE ONLY)
+------------------------------------------------------------
+
+INSIDE:
+A_start <= B_start AND B_end <= A_end
+
+OVERLAP:
+A_start <= B_end AND A_end >= B_start
+
+NO OVERLAP:
+A_end < B_start OR A_start > B_end
+
+START INSIDE:
+A_start <= B_start <= A_end
+
+END INSIDE:
+A_start <= B_end <= A_end
+
+------------------------------------------------------------
+🧠 8. FINAL THINKING MODEL
+
+Every question =
+
+1) WHICH ENTITY?
+   booking? room? booking vs booking?
+
+2) WHICH COLUMN?
+   start or end or both?
+
+3) WHICH RELATION?
+   inside / overlap / outside / conflict?
+
+4) WHICH TOOL?
+   semi_join / inner_join / anti_join + filter
+
+------------------------------------------------------------
+🔥 KEY TRUTH
+
+There are ONLY 3 real patterns:
+- INSIDE
+- OVERLAP
+- OUTSIDE
+
+Everything else is variation of these.
+
+*******************************************************************************************************************************************************************************************
+#Find bookings that overlap with room availability
+bookings %>% 
+  inner_join(rooms, by = join_by(room_id,start_date <= end_date,
+                                end_date >= start_date))
+
+#Find rooms that have at least one booking overlap
+bookings %>% 
+  inner_join(rooms, by = join_by(room_id,start_date <= end_date,
+                                 end_date >= start_date)) %>% distinct(room_id)
+
+#Find bookings that do not match any room availability
+bookings %>% 
+  anti_join(rooms, by = join_by(room_id,start_date <= end_date,
+                                end_date >= start_date))
